@@ -23,16 +23,17 @@ repos:
       - id: autoflake
         args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable']
 
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.2.0
-    hooks:
-      - id: seed-isort-config
-        args: [--application-directories, "src:."]
-
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.9.2
+  - repo: https://github.com/pycqa/isort
+    rev: 5.8.0
     hooks:
       - id: isort
+        name: isort (python)
+      - id: isort
+        name: isort (cython)
+        types: [cython]
+      - id: isort
+        name: isort (pyi)
+        types: [pyi]
 
   - repo: https://github.com/kynan/nbstripout
     rev: 0.5.0
