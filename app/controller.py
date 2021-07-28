@@ -4,7 +4,8 @@ from collections import defaultdict
 from typing import Dict, List, Optional, Union
 
 import httpx
-from client import coingecko_client, weisscrypto_client
+
+from app.client import coingecko_client, weisscrypto_client
 
 
 def get_top_coins(n: int = 50) -> List[str]:
