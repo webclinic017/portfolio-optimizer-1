@@ -8,6 +8,7 @@ repos:
       - id: check-yaml
       - id: check-docstring-first
       - id: end-of-file-fixer
+        exclude: research/
       - id: requirements-txt-fixer
 
   - repo: https://github.com/ambv/black
@@ -32,3 +33,8 @@ repos:
     rev: v5.9.2
     hooks:
       - id: isort
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.5.0
+    hooks:
+      - id: nbstripout
