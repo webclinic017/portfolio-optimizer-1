@@ -5,7 +5,6 @@ from functools import wraps
 from typing import Callable, Dict, List
 
 import httpx
-from httpx import HTTPStatusError
 
 _RESET_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 
@@ -19,7 +18,7 @@ def retry(f: Callable) -> Callable:
         while True:
             try:
                 result = make_call()
-            except HTTPStatusError as e:
+            except httpx.HTTPStatusError as e:
                 if e.response.status_code != 429:
                     raise
 
