@@ -28,7 +28,3 @@ def get_stock_prices(symbol: str, days: Optional[int] = None) -> Dict:
         result[date] = daily_prices[d]["4. close"]
 
     return result
-
-
-if __name__ == "__main__":
-    print(get_stock_prices("AAPL", days=5))
