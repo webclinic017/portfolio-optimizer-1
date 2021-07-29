@@ -120,7 +120,7 @@ def get_coins_total_volumes(
     return dict(total_volumes)
 
 
-def get_index_prices():
+def get_index_prices() -> Dict[dt.date, float]:
     response: httpx.Response = weisscrypto_client.get_w50_history()
     index_data: List = response.json()
     return {
