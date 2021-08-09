@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "portfolio-optimization"
-version = "0.0.1"
-description = ""
+version = "0.1.0"
+description = "Portfolio optimization service"
 authors = ["Eugene Serdyuk <eugene.serdyuk@pm.me>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -16,8 +17,12 @@ seaborn = "^0.11.1"
 cachetools = "^4.2.2"
 bt = "^0.2.9"
 environs = "^9.3.2"
+coingecko-api-client = "^0.1.6"
+fastapi = "^0.68.0"
 
 [tool.poetry.dev-dependencies]
+black = "^21.7b0"
+isort = "^5.9.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

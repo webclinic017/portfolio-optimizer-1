@@ -11,6 +11,10 @@ clean:
 	pyenv local --unset
 	pyenv uninstall -f $(PROJECT_NAME)
 
+lint:
+	black portfolio_optimization/
+	isort --profile black portfolio_optimization/
+
 update:
 	pip install -U pip
 	poetry update

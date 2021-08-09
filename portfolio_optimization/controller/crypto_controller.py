@@ -3,61 +3,47 @@ import logging
 from collections import defaultdict
 from typing import Dict, List, Optional, Union
 
-import httpx
-
-from app.client import coingecko_client, weisscrypto_client
+from client import coingecko_client
 
 
-def get_top_coins(n: int = 50) -> List[str]:
-    response: httpx.Response = coingecko_client.get_search()
-    all_coins = [x["id"] for x in response.json()["coins"]]
-    return all_coins[:n]
+async def get_top_coins(n: int = 50) -> List[str]:
+    return await coingecko_client.get_top_coins(vs_currency="usd", per_page=n)
 
 
-def get_coin_prices(
+async def get_coin_prices(
     coin: str, days: Union[int, str, None] = None
 ) -> Dict[dt.date, float]:
-    response: httpx.Response = coingecko_client.get_daily_market_chart(
-        coin=coin, days=days
+    coin_data: Dict = await coingecko_client.get_coin_market_chart(
+        coin_id=coin, vs_currency="usd", days=days
     )
-    coin_data: Dict = response.json()
-    return {
-        dt.date.fromtimestamp(ts / 1000): price for ts, price in coin_data["prices"]
-    }
+    return coin_data["prices"]
 
 
-def get_coin_market_caps(
+async def get_coin_market_caps(
     coin: str, days: Union[int, str, None] = None
 ) -> Dict[dt.date, float]:
-    response: httpx.Response = coingecko_client.get_daily_market_chart(
-        coin=coin, days=days
+    coin_data: Dict = await coingecko_client.get_coin_market_chart(
+        coin_id=coin, vs_currency="usd", days=days
     )
-    coin_data: Dict = response.json()
-    return {
-        dt.date.fromtimestamp(ts / 1000): market_cap
-        for ts, market_cap in coin_data["market_caps"]
-    }
+    return coin_data["market_caps"]
 
 
-def get_coin_total_volumes(
+async def get_coin_total_volumes(
     coin: str, days: Union[int, str, None] = None
 ) -> Dict[dt.date, float]:
-    response: httpx.Response = coingecko_client.get_daily_market_chart(
-        coin=coin, days=days
+    coin_data: Dict = await coingecko_client.get_coin_market_chart(
+        coin_id=coin, vs_currency="usd", days=days
     )
-    coin_data: Dict = response.json()
-    return {
-        dt.date.fromtimestamp(ts / 1000): vol for ts, vol in coin_data["total_volumes"]
-    }
+    return coin_data["total_volumes"]
 
 
-def get_coins_prices(
+async def get_coins_prices(
     coins: List[str], days: Union[int, str, None] = None, min_days: Optional[int] = None
 ) -> Dict[dt.date, Dict[str, float]]:
     prices = defaultdict(dict)
 
     for coin in coins:
-        coin_prices = get_coin_prices(coin, days)
+        coin_prices = await get_coin_prices(coin, days)
 
         if min_days is not None and len(coin_prices) < min_days:
             logging.getLogger().warning(
@@ -74,13 +60,13 @@ def get_coins_prices(
     return dict(prices)
 
 
-def get_coins_market_caps(
+async def get_coins_market_caps(
     coins: List[str], days: Union[int, str, None] = None, min_days: Optional[int] = None
 ) -> Dict[dt.date, Dict[str, float]]:
     market_caps = defaultdict(dict)
 
     for coin in coins:
-        coin_market_caps = get_coin_market_caps(coin, days)
+        coin_market_caps = await get_coin_market_caps(coin, days)
 
         if min_days is not None and len(coin_market_caps) < min_days:
             logging.getLogger().warning(
@@ -97,13 +83,13 @@ def get_coins_market_caps(
     return dict(market_caps)
 
 
-def get_coins_total_volumes(
+async def get_coins_total_volumes(
     coins: List[str], days: Union[int, str, None] = None, min_days: Optional[int] = None
 ) -> Dict[dt.date, Dict[str, float]]:
     total_volumes = defaultdict(dict)
 
     for coin in coins:
-        coin_total_volumes = get_coin_total_volumes(coin, days)
+        coin_total_volumes = await get_coin_total_volumes(coin, days)
 
         if min_days is not None and len(coin_total_volumes) < min_days:
             logging.getLogger().warning(
@@ -118,11 +104,3 @@ def get_coins_total_volumes(
             total_volumes[date][coin] = coin_total_volumes[date]
 
     return dict(total_volumes)
-
-
-def get_index_prices() -> Dict[dt.date, float]:
-    response: httpx.Response = weisscrypto_client.get_w50_history()
-    index_data: List = response.json()
-    return {
-        dt.datetime.fromisoformat(data[0][:-1]).date(): data[-1] for data in index_data
-    }
