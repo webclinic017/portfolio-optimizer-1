@@ -72,9 +72,9 @@ class BaseOptimizer(base_optimizer.BaseOptimizer):
         portfolios[0, i] = returns
         portfolios[1, i] = volatility
         portfolios[2, i] = sharpe
-        for j in range(len(weights)):
-            portfolios[j + 3, i] = weights[j]
+        for j, w in enumerate(weights):
+            portfolios[j + 3, i] = w
 
     @abstractmethod
     def get_portfolio_weights(self, n: int) -> np.array:
-        ...
+        pass
