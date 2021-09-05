@@ -24,6 +24,10 @@ Tickers can be found at [Yahoo Finance](https://finance.yahoo.com).
 * **ledoit_wolf_single_factor** - Ledoit-Wolf shrinkage estimate for a single factor
 * **ledoit_wolf_constant_correlation** - Ledoit-Wolf shrinkage estimate for a constant correlation
 * **oracle_approximating** - Oracle Approximating Shrinkage estimate
+
+## Target
+* **max_sharpe** - Maximize Sharpe ratio
+* **min_volatility** - Minimize volatility
 """
 
 
