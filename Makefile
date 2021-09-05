@@ -2,8 +2,7 @@ PROJECT_NAME = portfolio-optimization
 PYTHON_VERSION = 3.9.7
 
 .ONESHELL:
-.PHONY: pyenv-new pyenv clean lint update-pip update-poetry requirements update run
-
+.PHONY: pyenv-new pyenv clean lint update-pip update-poetry requirements update run build
 pyenv-new:
 	pyenv virtualenv $(PYTHON_VERSION) $(PROJECT_NAME)
 	pyenv local $(PROJECT_NAME)
@@ -33,3 +32,6 @@ update: update-pip update-poetry requirements
 
 run:
 	uvicorn --factory portfolio_optimization.app:create_app --reload --host 0.0.0.0 --port 5000
+
+build: requirements
+	docker build -f Dockerfile -t eserdk/portfolio-optimization:latest .
