@@ -19,6 +19,10 @@ api_router = APIRouter(prefix="/api", tags=["api"])
     response_model=OptimizationResults,
     status_code=200,
     description="Calculate optimal weights for the given tickers (in request body), optimizer, risk model and target.",
+    responses={
+        200: {"description": "Portfolio allocation and corresponding performance."},
+        404: {"description": "No data for one or more symbols."},
+    },
 )
 def optimize(
     tickers: List[str],
