@@ -1,5 +1,6 @@
 from typing import List
 
+import fastapi.exceptions
 from fastapi import APIRouter, Query
 
 from portfolio_optimization import controller
@@ -30,9 +31,12 @@ def optimize(
         description="Optimization problem to solve. Doesn't matter if `hrp` is chosen as an optimizer.",
     ),
 ) -> OptimizationResults:
-    return controller.optimize(
-        tickers=tickers,
-        optimizer=optimizer,
-        risk_model=risk_model,
-        target=target,
-    )
+    try:
+        return controller.optimize(
+            tickers=tickers,
+            optimizer=optimizer,
+            risk_model=risk_model,
+            target=target,
+        )
+    except ValueError as e:
+        raise fastapi.exceptions.HTTPException(404, str(e))
