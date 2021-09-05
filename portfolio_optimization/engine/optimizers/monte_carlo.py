@@ -2,13 +2,14 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
-from engine.common import BaseOptimizer
+
+from portfolio_optimization.engine.optimizers.common import BaseOptimizer
 
 
 class MonteCarloOptimizer(BaseOptimizer):
     def __init__(
         self,
-        expected_returns: pd.DataFrame,
+        expected_returns: pd.Series,
         cov_matrix: pd.DataFrame,
         n_portfolios: int = 1000,
     ):
@@ -18,6 +19,7 @@ class MonteCarloOptimizer(BaseOptimizer):
         self.n_portfolios = n_portfolios
         tickers = list(expected_returns.index)
         super(MonteCarloOptimizer, self).__init__(len(tickers), tickers)
+        self.generate_portfolios()
 
     def generate_portfolios(self, n_portfolios: Optional[int] = None):
         n_portfolios = n_portfolios if n_portfolios else self.n_portfolios

@@ -7,7 +7,7 @@ from pypfopt import base_optimizer
 
 
 class BaseOptimizer(base_optimizer.BaseOptimizer):
-    expected_returns: pd.DataFrame
+    expected_returns: pd.Series
     cov_matrix: pd.DataFrame
     portfolios: Optional[pd.DataFrame]
 

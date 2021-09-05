@@ -2,12 +2,13 @@ from typing import Optional, Union
 
 import numpy as np
 import pandas as pd
-from engine.common import BaseOptimizer
 from sklearn.decomposition import PCA as PCA_
+
+from portfolio_optimization.engine.optimizers.common import BaseOptimizer
 
 
 class PCAOptimizer(BaseOptimizer):
-    def __init__(self, expected_returns: pd.DataFrame, cov_matrix: pd.DataFrame):
+    def __init__(self, expected_returns: pd.Series, cov_matrix: pd.DataFrame):
         self.expected_returns = expected_returns
         self.cov_matrix = cov_matrix
         self.portfolios: Optional[pd.DataFrame] = None
@@ -15,6 +16,7 @@ class PCAOptimizer(BaseOptimizer):
         self.pcs = self.pca.fit_transform(cov_matrix)
         tickers = list(expected_returns.index)
         super(PCAOptimizer, self).__init__(len(tickers), tickers)
+        self.generate_portfolios()
 
     def generate_portfolios(self):
         portfolios = np.zeros((self.n_assets + 3, self.n_assets))

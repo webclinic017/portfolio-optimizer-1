@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-from routes import securities_routes
 
-from portfolio_optimization.client import coingecko_client
+from portfolio_optimization.routes.api_routes import api_router
 
 
 def create_app(testing: bool = False) -> FastAPI:
@@ -9,9 +8,8 @@ def create_app(testing: bool = False) -> FastAPI:
         debug=testing,
         title="Portfolio Optimization",
         version="0.1.0",
-        on_shutdown=[coingecko_client.close],
     )
 
-    app.include_router(securities_routes.securities_router)
+    app.include_router(api_router)
 
     return app
