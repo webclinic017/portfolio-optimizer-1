@@ -1,1 +1,1 @@
-web: gunicorn portfolio_optimization.app:create_app
+web: gunicorn -c file:portfolio_optimization/guniconf.py portfolio_optimization.app:create_app
