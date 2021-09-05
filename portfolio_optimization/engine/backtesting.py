@@ -14,7 +14,7 @@ class Backtesting:
                 self.add_strategy(
                     weights={
                         **{tk: 0.0 for tk in prices_df.columns if tk != t},
-                        **{t: 1.0},
+                        t: 1.0,
                     },
                     name=t,
                 )
