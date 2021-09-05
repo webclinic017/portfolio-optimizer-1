@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 
 import bt
 import pandas as pd
@@ -10,10 +10,13 @@ class Backtesting:
         self.strategies = []
 
         if add_raw_tickers:
-            cols: List = list(prices_df.columns)
-            for t in cols:
+            for t in prices_df.columns:
                 self.add_strategy(
-                    weights={**{tk: 0.0 for tk in cols if tk != t}, **{t: 1.0}}, name=t
+                    weights={
+                        **{tk: 0.0 for tk in prices_df.columns if tk != t},
+                        **{t: 1.0},
+                    },
+                    name=t,
                 )
 
     def add_strategy(self, weights: Dict, name: str) -> None:
@@ -29,8 +32,6 @@ class Backtesting:
                     ],
                 ),
                 data=self.prices_df,
-                initial_capital=1.0,
-                commissions=lambda quantity, price: (quantity * price) * 0.001,
                 progress_bar=False,
                 integer_positions=False,
             )

@@ -36,12 +36,7 @@ def get_daily_data_for_tickers(
         show_errors=False,
     )
 
-    wrong_tickers: List[str] = []
-    for t in tickers:
-        if not data[t.upper()].any().values.any():
-            wrong_tickers.append(t)
-
-    if wrong_tickers:
+    if wrong_tickers := [t for t in tickers if not data[t.upper()].any().values.any()]:
         raise ValueError(
             f"No data found for {', '.join(wrong_tickers)}. Symbols may be delisted or incorrect.",
         )
@@ -56,13 +51,12 @@ def get_daily_data_for_tickers(
 
 
 def get_adj_close_daily_data_for_tickers(tickers: Iterable[str]) -> pd.DataFrame:
-    data: pd.DataFrame = get_daily_data_for_tickers(tickers)
-    data = (
-        data.stack(level=0)
+    return (
+        get_daily_data_for_tickers(tickers)
+        .stack(level=0)
         .rename_axis(["Date", "Ticker"])
         .unstack(level=1)["Adj Close"]
     )
-    return data
 
 
 def optimize(
