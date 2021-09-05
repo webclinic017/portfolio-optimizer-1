@@ -33,5 +33,5 @@ Tickers can be found at [Yahoo Finance](https://finance.yahoo.com).
 - **oracle_approximating** Oracle Approximating Shrinkage estimate  
 
 ### Target
-- **max_sharpe** - Maximize Sharpe ratio  
-- **min_volatility** - Minimize volatility  
+- **max_sharpe** Maximize Sharpe ratio  
+- **min_volatility** Minimize volatility  
