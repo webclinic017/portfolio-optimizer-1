@@ -32,4 +32,4 @@ requirements:
 update: update-pip update-poetry requirements
 
 run:
-	poetry run uvicorn --factory portfolio_optimization.app:create_app --reload --host 0.0.0.0 --port 5000
+	uvicorn --factory portfolio_optimization.app:create_app --reload --host 0.0.0.0 --port 5000
