@@ -15,10 +15,10 @@ from portfolio_optimization.models import (
 )
 
 BASE_OPTIMIZERS_MAP = {
-    Optimizer.mc.value: MonteCarloOptimizer,
-    Optimizer.pca.value: PCAOptimizer,
-    Optimizer.cla.value: CLA,
-    Optimizer.ef.value: EfficientFrontier,
+    Optimizer.mc: MonteCarloOptimizer,
+    Optimizer.pca: PCAOptimizer,
+    Optimizer.cla: CLA,
+    Optimizer.ef: EfficientFrontier,
 }
 
 
@@ -85,7 +85,7 @@ def optimize(
         S: pd.DataFrame = risk_models.risk_matrix(
             df_prices, frequency=365, method=risk_model.value
         )
-        model = BASE_OPTIMIZERS_MAP[optimizer.value](mu, S)
+        model = BASE_OPTIMIZERS_MAP[optimizer](mu, S)
         actual_optimization_method = getattr(model, target.value)
         actual_optimization_method()
 
