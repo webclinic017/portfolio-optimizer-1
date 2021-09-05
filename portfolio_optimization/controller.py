@@ -36,12 +36,6 @@ def get_daily_data_for_tickers(
         show_errors=False,
     )
 
-    if ffill:
-        data = data.ffill()
-
-    if dropna:
-        data = data.dropna()
-
     wrong_tickers: List[str] = []
     for t in tickers:
         if not data[t.upper()].any().values.any():
@@ -49,9 +43,14 @@ def get_daily_data_for_tickers(
 
     if wrong_tickers:
         raise ValueError(
-            "No data found for %s. Symbols may be delisted or incorrect.",
-            ", ".join(wrong_tickers),
+            f"No data found for {', '.join(wrong_tickers)}. Symbols may be delisted or incorrect.",
         )
+
+    if ffill:
+        data = data.ffill()
+
+    if dropna:
+        data = data.dropna()
 
     return data
 
