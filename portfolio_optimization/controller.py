@@ -64,18 +64,16 @@ def optimize(
     # prices
     df_prices: pd.DataFrame = get_adj_close_daily_data_for_tickers(tickers)
 
-    # model preparations
-    mu: pd.Series = expected_returns.capm_return(df_prices, frequency=365)
-    S: pd.DataFrame = risk_models.risk_matrix(
-        df_prices, frequency=365, method=risk_model.value
-    )
-
     # model
     model: Union[HRPOpt, MonteCarloOptimizer, PCAOptimizer, CLA, EfficientFrontier]
     if optimizer == Optimizer.hrp:
-        model = HRPOpt(cov_matrix=S)
+        model = HRPOpt(expected_returns.returns_from_prices(df_prices))
         model.optimize()
     else:
+        mu: pd.Series = expected_returns.capm_return(df_prices, frequency=365)
+        S: pd.DataFrame = risk_models.risk_matrix(
+            df_prices, frequency=365, method=risk_model.value
+        )
         model = BASE_OPTIMIZERS_MAP[optimizer.value](mu, S)
         actual_optimization_method = getattr(model, target.value)
         actual_optimization_method()
