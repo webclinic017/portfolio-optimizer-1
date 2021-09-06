@@ -1,7 +1,7 @@
 from typing import List
 
 import fastapi.exceptions
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Body, Query
 
 from portfolio_optimizer import controller
 from portfolio_optimizer.models import (
@@ -26,7 +26,13 @@ api_router = APIRouter(prefix="/api", tags=["api"])
     },
 )
 def optimize(
-    tickers: List[str],
+    tickers: List[str] = Body(
+        ...,
+        description="List of tickers from Yahoo Finance",
+        min_length=2,
+        max_length=20,
+        example=["BTC-USD", "ETH-USD", "ADA-USD", "EIMI.L", "SUSW.L", "WSML.L"],
+    ),
     optimizer: Optimizer = Query(Optimizer.ef, description="Optimizer to use."),
     risk_model: RiskModel = Query(
         RiskModel.oracle_approximating, description="Risk model to use."
