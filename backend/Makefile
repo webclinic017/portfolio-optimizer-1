@@ -26,7 +26,7 @@ update-poetry:
 	poetry update
 
 requirements:
-	poetry export -f requirements.txt --output requirements.txt --without-hashes
+	poetry export -f requirements.txt --output ../requirements.txt --without-hashes
 
 update: update-pip update-poetry requirements
 
