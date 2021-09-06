@@ -24,12 +24,6 @@ bt = "^0.2.9"
 matplotlib = "^3.4.3"
 jupyter = "^1.0.0"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-line_length = 88
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
