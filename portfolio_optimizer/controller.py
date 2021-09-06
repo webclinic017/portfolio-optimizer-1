@@ -1,10 +1,9 @@
-from typing import Iterable, List, Union
+from typing import List
 
 import pandas as pd
-import yfinance as yf
 from pypfopt import CLA, EfficientFrontier, HRPOpt, expected_returns, risk_models
 
-from portfolio_optimizer.cache import use_requests_cache
+from portfolio_optimizer.clients import yfinance_client as yf
 from portfolio_optimizer.engine.optimizers.monte_carlo import MonteCarloOptimizer
 from portfolio_optimizer.engine.optimizers.pca import PCAOptimizer
 from portfolio_optimizer.models import (
@@ -23,18 +22,11 @@ BASE_OPTIMIZERS_MAP = {
 }
 
 
-@use_requests_cache()
-def get_daily_data_for_tickers(
-    tickers: Iterable[str], ffill: bool = True, dropna: bool = True
-) -> pd.DataFrame:
+def get_daily_data_for_tickers(tickers: List[str]) -> pd.DataFrame:
     data: pd.DataFrame = yf.download(
-        " ".join(tickers),
+        tickers,
         period="max",
         interval="1d",
-        group_by="ticker",
-        threads=False,
-        progress=False,
-        show_errors=False,
     )
 
     if wrong_tickers := [t for t in tickers if not data[t.upper()].any().values.any()]:
@@ -42,16 +34,10 @@ def get_daily_data_for_tickers(
             f"No data found for {', '.join(wrong_tickers)}. Symbol(s) may be delisted or incorrect.",
         )
 
-    if ffill:
-        data = data.ffill()
-
-    if dropna:
-        data = data.dropna()
-
-    return data
+    return data.ffill().dropna()
 
 
-def get_adj_close_daily_data_for_tickers(tickers: Iterable[str]) -> pd.DataFrame:
+def get_adj_close_daily_data_for_tickers(tickers: List[str]) -> pd.DataFrame:
     return (
         get_daily_data_for_tickers(tickers)
         .stack(level=0)
@@ -67,11 +53,8 @@ def optimize(
     return_model: ReturnModel = ReturnModel.capm_return,
     target: Target = Target.max_sharpe,
 ) -> OptimizationResults:
-    # prices
     df_prices: pd.DataFrame = get_adj_close_daily_data_for_tickers(tickers)
 
-    # model
-    model: Union[HRPOpt, MonteCarloOptimizer, PCAOptimizer, CLA, EfficientFrontier]
     if optimizer == Optimizer.hrp:
         model = HRPOpt(expected_returns.returns_from_prices(df_prices))
         model.optimize()
@@ -86,10 +69,7 @@ def optimize(
         actual_optimization_method = getattr(model, target.value)
         actual_optimization_method()
 
-    # weights
     weights = model.clean_weights(rounding=2)
-
-    # performance
     (
         expected_annual_return,
         annual_volatility,
