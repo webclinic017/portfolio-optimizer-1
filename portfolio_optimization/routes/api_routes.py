@@ -7,6 +7,7 @@ from portfolio_optimization import controller
 from portfolio_optimization.models import (
     OptimizationResults,
     Optimizer,
+    ReturnModel,
     RiskModel,
     Target,
 )
@@ -21,7 +22,7 @@ api_router = APIRouter(prefix="/api", tags=["api"])
     description="Calculate optimal weights for the given tickers (in request body), optimizer, risk model and target.",
     responses={
         200: {"description": "Portfolio allocation and corresponding performance."},
-        404: {"description": "No data for one or more symbols."},
+        404: {"description": "No data available for one or more symbols."},
     },
 )
 def optimize(
@@ -29,6 +30,10 @@ def optimize(
     optimizer: Optimizer = Query(Optimizer.ef, description="Optimizer to use."),
     risk_model: RiskModel = Query(
         RiskModel.oracle_approximating, description="Risk model to use."
+    ),
+    return_model: ReturnModel = Query(
+        ReturnModel.capm_return,
+        description="Return model used to calculate an estimate of future returns. Doesn't matter if `hrp` is chosen as an optimizer.",
     ),
     target: Target = Query(
         Target.max_sharpe,
@@ -40,6 +45,7 @@ def optimize(
             tickers=tickers,
             optimizer=optimizer,
             risk_model=risk_model,
+            return_model=return_model,
             target=target,
         )
     except ValueError as e:

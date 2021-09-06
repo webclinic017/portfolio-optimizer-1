@@ -28,11 +28,21 @@ class Target(str, Enum):
     min_volatility = "min_volatility"
 
 
+class ReturnModel(str, Enum):
+    mean_historical_return = "mean_historical_return"
+    ema_historical_return = "ema_historical_return"
+    capm_return = "capm_return"
+
+
 class OptimizationResults(BaseModel):
     optimizer: Optimizer = Field(
         ..., description="Optimizer used to solve the optimization problem."
     )
     risk_model: RiskModel = Field(..., description="Risk model used.")
+    return_model: ReturnModel = Field(
+        ...,
+        description="Return model used to calculate an estimate of future returns. Doesn't matter if `hrp` is chosen as an optimizer.",
+    )
     weights: Dict[str, float] = Field(
         ...,
         description="JSON-like object containing `asset: proportion of investments` which corresponds the solved problem results.",

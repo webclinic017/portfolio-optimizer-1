@@ -10,6 +10,7 @@ from portfolio_optimization.engine.optimizers.pca import PCAOptimizer
 from portfolio_optimization.models import (
     OptimizationResults,
     Optimizer,
+    ReturnModel,
     RiskModel,
     Target,
 )
@@ -38,7 +39,7 @@ def get_daily_data_for_tickers(
 
     if wrong_tickers := [t for t in tickers if not data[t.upper()].any().values.any()]:
         raise ValueError(
-            f"No data found for {', '.join(wrong_tickers)}. Symbols may be delisted or incorrect.",
+            f"No data found for {', '.join(wrong_tickers)}. Symbol(s) may be delisted or incorrect.",
         )
 
     if ffill:
@@ -63,9 +64,9 @@ def optimize(
     tickers: List[str],
     optimizer: Optimizer = Optimizer.ef,
     risk_model: RiskModel = RiskModel.oracle_approximating,
+    return_model: ReturnModel = ReturnModel.capm_return,
     target: Target = Target.max_sharpe,
 ) -> OptimizationResults:
-
     # prices
     df_prices: pd.DataFrame = get_adj_close_daily_data_for_tickers(tickers)
 
@@ -75,7 +76,9 @@ def optimize(
         model = HRPOpt(expected_returns.returns_from_prices(df_prices))
         model.optimize()
     else:
-        mu: pd.Series = expected_returns.capm_return(df_prices, frequency=365)
+        mu: pd.DataFrame = expected_returns.return_model(
+            df_prices, method=return_model.value, frequency=365
+        )
         S: pd.DataFrame = risk_models.risk_matrix(
             df_prices, frequency=365, method=risk_model.value
         )
@@ -96,6 +99,7 @@ def optimize(
     return OptimizationResults(
         optimizer=optimizer.value,
         risk_model=risk_model.value,
+        return_model=return_model.value,
         weights=weights,
         expected_annual_return=expected_annual_return * 100,
         annual_volatility=annual_volatility * 100,

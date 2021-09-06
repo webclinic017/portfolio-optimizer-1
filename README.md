@@ -35,6 +35,13 @@ Tickers can be found at [Yahoo Finance](https://finance.yahoo.com).
 - **ledoit_wolf_constant_correlation** Ledoit-Wolf shrinkage estimate for a constant correlation
 - **oracle_approximating** Oracle Approximating Shrinkage estimate
 
+### Return Models
+
+- **mean_historical_return** Annualised mean (daily) historical return from input (daily) asset prices
+- **ema_historical_return** Exponentially-weighted mean of (daily) historical returns, giving higher weight to more
+  recent data
+- **capm_return** Capital Asset Pricing Model: under the CAPM, asset returns are equal to market returns plus a beta term encoding the relative risk of the asset
+
 ### Target
 
 - **max_sharpe** Maximize Sharpe ratio
