@@ -9,5 +9,5 @@ view_router = APIRouter(tags=["view"])
     responses={307: {"description": "Redirects to `/docs`"}},
     response_class=RedirectResponse,
 )
-def serve_index() -> RedirectResponse:
+def to_docs() -> RedirectResponse:
     return RedirectResponse(url="/docs")
