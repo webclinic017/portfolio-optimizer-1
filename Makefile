@@ -26,7 +26,7 @@ update-poetry:
 	poetry update
 
 requirements:
-	poetry export -f requirements.txt --output ../requirements.txt --without-hashes
+	poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 update: update-pip update-poetry requirements
 
@@ -34,4 +34,4 @@ run:
 	python -m portfolio_optimizer
 
 build: requirements
-	docker build -f Dockerfile -t eserdk/portfolio-portfolio_optimizer:latest .
+	docker build -f Dockerfile -t eserdk/portfolio-optimizer:latest .

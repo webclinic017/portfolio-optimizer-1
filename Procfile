@@ -1,1 +1,1 @@
-web: gunicorn -c file:backend/portfolio_optimizer/guniconf.py --chdir backend portfolio_optimizer.app:create_app
+web: gunicorn -c file:portfolio_optimizer/guniconf.py backend portfolio_optimizer.app:create_app
