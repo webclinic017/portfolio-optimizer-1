@@ -3,8 +3,8 @@ from typing import List
 import fastapi.exceptions
 from fastapi import APIRouter, Query
 
-from portfolio_optimization import controller
-from portfolio_optimization.models import (
+from portfolio_optimizer import controller
+from portfolio_optimizer.models import (
     OptimizationResults,
     Optimizer,
     ReturnModel,

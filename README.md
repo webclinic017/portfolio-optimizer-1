@@ -1,7 +1,4 @@
-# Portfolio Optimization
-
-Portfolio Optimizer API based on [PyPortfolioOpt](https://pyportfolioopt.readthedocs.io/en/latest/)
-and [FastAPI](http://fastapi.tiangolo.com/) libraries.
+# Portfolio Optimizer
 
 - [Swagger](https://eserdk-portfolio-optimization.herokuapp.com/docs)
 - [ReDoc](https://eserdk-portfolio-optimization.herokuapp.com/redoc)
@@ -10,7 +7,7 @@ and [FastAPI](http://fastapi.tiangolo.com/) libraries.
 
 ***
 
-## API
+## Description
 
 ### Tickers
 

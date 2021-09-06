@@ -4,10 +4,10 @@ import pandas as pd
 import yfinance as yf
 from pypfopt import CLA, EfficientFrontier, HRPOpt, expected_returns, risk_models
 
-from portfolio_optimization.cache import use_requests_cache
-from portfolio_optimization.engine.optimizers.monte_carlo import MonteCarloOptimizer
-from portfolio_optimization.engine.optimizers.pca import PCAOptimizer
-from portfolio_optimization.models import (
+from portfolio_optimizer.cache import use_requests_cache
+from portfolio_optimizer.engine.optimizers.monte_carlo import MonteCarloOptimizer
+from portfolio_optimizer.engine.optimizers.pca import PCAOptimizer
+from portfolio_optimizer.models import (
     OptimizationResults,
     Optimizer,
     ReturnModel,

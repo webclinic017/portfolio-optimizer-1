@@ -1,4 +1,4 @@
-PROJECT_NAME = portfolio-optimization
+PROJECT_NAME = portfolio-optimizer
 PYTHON_VERSION = 3.9.7
 
 .ONESHELL:
@@ -16,8 +16,8 @@ clean:
 	pyenv uninstall -f $(PROJECT_NAME)
 
 lint:
-	black portfolio_optimization/
-	isort --profile black portfolio_optimization/
+	black portfolio_optimizer/
+	isort --profile black portfolio_optimizer/
 
 update-pip:
 	pip install -U pip
@@ -31,7 +31,7 @@ requirements:
 update: update-pip update-poetry requirements
 
 run:
-	uvicorn --factory portfolio_optimization.app:create_app --reload --host 0.0.0.0 --port 5000
+	python -m portfolio_optimizer
 
 build: requirements
-	docker build -f Dockerfile -t eserdk/portfolio-optimization:latest .
+	docker build -f Dockerfile -t eserdk/portfolio-portfolio_optimizer:latest .

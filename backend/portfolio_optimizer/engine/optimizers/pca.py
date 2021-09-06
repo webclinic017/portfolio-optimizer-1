@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA as PCA_
 
-from portfolio_optimization.engine.optimizers.common import BaseOptimizer
+from portfolio_optimizer.engine.optimizers.common import BaseOptimizer
 
 
 class PCAOptimizer(BaseOptimizer):

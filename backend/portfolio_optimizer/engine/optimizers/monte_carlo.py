@@ -3,7 +3,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
-from portfolio_optimization.engine.optimizers.common import BaseOptimizer
+from portfolio_optimizer.engine.optimizers.common import BaseOptimizer
 
 
 class MonteCarloOptimizer(BaseOptimizer):

@@ -1,5 +1,0 @@
-build:
-  docker:
-    web: Dockerfile
-run:
-  web: gunicorn -c python:portfolio_optimization.guniconf portfolio_optimization.app:create_app
