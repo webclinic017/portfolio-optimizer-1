@@ -3,6 +3,7 @@ PYTHON_VERSION = 3.9.7
 
 .ONESHELL:
 .PHONY: pyenv-new pyenv clean lint update-pip update-poetry requirements update run build
+
 pyenv-new:
 	pyenv virtualenv $(PYTHON_VERSION) $(PROJECT_NAME)
 	pyenv local $(PROJECT_NAME)
