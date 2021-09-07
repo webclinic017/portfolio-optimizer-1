@@ -1,9 +1,9 @@
 # Portfolio Optimizer
 
-- [Swagger](https://eserdk-portfolio-optimization.herokuapp.com/docs)
-- [ReDoc](https://eserdk-portfolio-optimization.herokuapp.com/redoc)
+- [Swagger](https://eserdk-portfolio-optimizer.herokuapp.com/docs)
+- [ReDoc](https://eserdk-portfolio-optimizer.herokuapp.com/redoc)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f16b330768264649b74cbad4c8532860)](https://www.codacy.com/gh/eserdk/portfolio-optimization/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=eserdk/portfolio-optimization&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f16b330768264649b74cbad4c8532860)](https://www.codacy.com/gh/eserdk/portfolio-optimizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=eserdk/portfolio-optimizer&amp;utm_campaign=Badge_Grade)
 
 ***
 

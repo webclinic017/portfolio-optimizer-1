@@ -35,7 +35,8 @@ def optimize(
     ),
     optimizer: Optimizer = Query(Optimizer.ef, description="Optimizer to use."),
     risk_model: RiskModel = Query(
-        RiskModel.oracle_approximating, description="Risk model to use."
+        RiskModel.oracle_approximating,
+        description="Risk model to use. Doesn't matter if `hrp` is chosen as an optimizer.",
     ),
     return_model: ReturnModel = Query(
         ReturnModel.capm_return,

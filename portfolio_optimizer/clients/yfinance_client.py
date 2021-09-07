@@ -13,10 +13,9 @@ def download(
     tickers: List[str], period: str = "max", interval: str = "1d"
 ) -> pd.DataFrame:
     dfs: Dict = {}
-    tickers = [t.upper() for t in tickers]
 
-    for t in tickers:
-        dfs[t.upper()] = yf.Ticker(t.upper(), SHARED_SESSION).history(
+    for t in (t.upper() for t in tickers):
+        dfs[t] = yf.Ticker(t, SHARED_SESSION).history(
             period=period,
             interval=interval,
             start=None,

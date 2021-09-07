@@ -10,7 +10,7 @@ from portfolio_optimizer.routes.view_routes import view_router
 def create_app(testing: bool = False) -> FastAPI:
     app = FastAPI(
         debug=testing,
-        title="Portfolio Optimization",
+        title="Portfolio Optimizer API",
         description=(Path(__file__).parent.parent / "README.md").read_text(),
         contact={"name": "Eugene Serdyuk", "email": "eugene.serdyuk@pm.me"},
         version="0.1.1",

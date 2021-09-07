@@ -21,7 +21,7 @@ def add_middleware(app: FastAPI) -> None:
         allow_origins=(
             "http://localhost",
             "http://0.0.0.0",
-            "https://eserdk-portfolio-optimization.herokuapp.com",
+            "https://eserdk-portfolio-optimizer.herokuapp.com",
         ),
         allow_methods=("*",),
     )
